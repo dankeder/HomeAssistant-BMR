@@ -37,7 +37,9 @@ CONF_CIRCUIT_ID = "circuit"
 CONF_CIRCUIT = vol.Schema(
     {
         vol.Required(CONF_NAME): cv.string,
-        vol.Required(CONF_CIRCUIT_ID): vol.All(vol.Coerce(int), vol.Range(min=0, max=63)),
+        vol.Required(CONF_CIRCUIT_ID): vol.All(
+            vol.Coerce(int), vol.Range(min=0, max=63)
+        ),
     }
 )
 
@@ -69,10 +71,10 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
 
 class BmrControllerAwayMode(SwitchEntity):
-    """ Switch for the away mode (in HC64 called "low mode"). This is a global
-        state of the controller, not specific to a particular circuit. When the
-        controller is in "low mode" target temperature of all circuits is set to a
-        predefined temperature and no schedules are taken into account.
+    """Switch for the away mode (in HC64 called "low mode"). This is a global
+    state of the controller, not specific to a particular circuit. When the
+    controller is in "low mode" target temperature of all circuits is set to a
+    predefined temperature and no schedules are taken into account.
     """
 
     def __init__(self, bmr):
@@ -83,14 +85,12 @@ class BmrControllerAwayMode(SwitchEntity):
 
     @property
     def name(self):
-        """ Return the name of the entity.
-        """
+        """Return the name of the entity."""
         return "BMR HC64 Away"
 
     @property
     def unique_id(self):
-        """ Return unique ID of the entity.
-        """
+        """Return unique ID of the entity."""
         return self._unique_id
 
     @property
@@ -99,8 +99,7 @@ class BmrControllerAwayMode(SwitchEntity):
 
     @property
     def is_on(self):
-        """ Return the state of the sensor.
-        """
+        """Return the state of the sensor."""
         return self._low_mode.get("start_date") is not None
 
     @property
@@ -112,19 +111,17 @@ class BmrControllerAwayMode(SwitchEntity):
         }
 
     def turn_on(self):
-        """ Turn on the Away mode.
-        """
+        """Turn on the Away mode."""
         self._bmr.setLowMode(True)
 
     def turn_off(self):
-        """ Turn off the Away mode.
-        """
+        """Turn off the Away mode."""
         self._bmr.setLowMode(False)
 
     @throttle(timedelta(seconds=30))
     def update(self):
-        """ Fetch new state data for the sensor.
-            This is the only method that should fetch new data for Home Assistant.
+        """Fetch new state data for the sensor.
+        This is the only method that should fetch new data for Home Assistant.
         """
         try:
             self._low_mode = self._bmr.getLowMode()
@@ -133,8 +130,8 @@ class BmrControllerAwayMode(SwitchEntity):
 
 
 class BmrControllerPowerSwitch(SwitchEntity):
-    """ Turn heating on/off (in HC64 called "summer mode"). This is a global
-        state of the controller, not specific to a particular circuit.
+    """Turn heating on/off (in HC64 called "summer mode"). This is a global
+    state of the controller, not specific to a particular circuit.
     """
 
     def __init__(self, bmr, circuits):
@@ -148,14 +145,12 @@ class BmrControllerPowerSwitch(SwitchEntity):
 
     @property
     def name(self):
-        """ Return the name of the entity.
-        """
+        """Return the name of the entity."""
         return "BMR HC64 Power"
 
     @property
     def unique_id(self):
-        """ Return unique ID of the entity.
-        """
+        """Return unique ID of the entity."""
         return self._unique_id
 
     @property
@@ -164,30 +159,37 @@ class BmrControllerPowerSwitch(SwitchEntity):
 
     @property
     def is_on(self):
-        """ Return the state of the sensor.
-        """
+        """Return the state of the sensor."""
         return not (
-            self._summer_mode and all(self._summer_mode_assignments[x.get(CONF_CIRCUIT_ID)] for x in self._circuits)
+            self._summer_mode
+            and all(
+                self._summer_mode_assignments[x.get(CONF_CIRCUIT_ID)]
+                for x in self._circuits
+            )
         )
 
     def turn_on(self):
-        """ Turn the power on. Which means turn the summer mode off and remove
-            circuits from summer mode assignments.
+        """Turn the power on. Which means turn the summer mode off and remove
+        circuits from summer mode assignments.
         """
         self._bmr.setSummerMode(False)
-        self._bmr.setSummerModeAssignments([x.get(CONF_CIRCUIT_ID) for x in self._circuits], False)
+        self._bmr.setSummerModeAssignments(
+            [x.get(CONF_CIRCUIT_ID) for x in self._circuits], False
+        )
 
     def turn_off(self):
-        """ Turn the power off. Which means turn the summer mode on and add
-            circuits to the summer mode assignments.
+        """Turn the power off. Which means turn the summer mode on and add
+        circuits to the summer mode assignments.
         """
         self._bmr.setSummerMode(True)
-        self._bmr.setSummerModeAssignments([x.get(CONF_CIRCUIT_ID) for x in self._circuits], True)
+        self._bmr.setSummerModeAssignments(
+            [x.get(CONF_CIRCUIT_ID) for x in self._circuits], True
+        )
 
     @throttle(timedelta(seconds=30))
     def update(self):
-        """ Fetch new state data for the sensor.
-            This is the only method that should fetch new data for Home Assistant.
+        """Fetch new state data for the sensor.
+        This is the only method that should fetch new data for Home Assistant.
         """
         self._summer_mode = self._bmr.getSummerMode()
         self._summer_mode_assignments = self._bmr.getSummerModeAssignments()

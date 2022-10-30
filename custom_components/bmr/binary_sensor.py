@@ -51,8 +51,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
 
 class BmrControllerHDO(BinarySensorEntity):
-    """ Binary sensor for reporting HDO (low/high electricity tariff).
-    """
+    """Binary sensor for reporting HDO (low/high electricity tariff)."""
 
     def __init__(self, bmr):
         self._bmr = bmr
@@ -62,26 +61,23 @@ class BmrControllerHDO(BinarySensorEntity):
 
     @property
     def name(self):
-        """ Return the name of the sensor.
-        """
+        """Return the name of the sensor."""
         return "BMR HC64 HDO"
 
     @property
     def unique_id(self):
-        """ Return unique ID of the entity.
-        """
+        """Return unique ID of the entity."""
         return self._unique_id
 
     @property
     def is_on(self):
-        """ Return the state of the sensor.
-        """
+        """Return the state of the sensor."""
         return bool(self._hdo)
 
     @throttle(timedelta(seconds=30))
     def update(self):
-        """ Fetch new state data for the sensor.
-            This is the only method that should fetch new data for Home Assistant.
+        """Fetch new state data for the sensor.
+        This is the only method that should fetch new data for Home Assistant.
         """
         try:
             self._hdo = self._bmr.getHDO()

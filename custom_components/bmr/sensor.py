@@ -37,7 +37,9 @@ CONF_CIRCUIT_ID = "circuit"
 CONF_CIRCUIT = vol.Schema(
     {
         vol.Required(CONF_NAME): cv.string,
-        vol.Required(CONF_CIRCUIT_ID): vol.All(vol.Coerce(int), vol.Range(min=0, max=63)),
+        vol.Required(CONF_CIRCUIT_ID): vol.All(
+            vol.Coerce(int), vol.Range(min=0, max=63)
+        ),
     }
 )
 
@@ -71,8 +73,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
 
 class BmrCircuitTemperatureBase(Entity):
-    """ Base class for temperature reporting sensors.
-    """
+    """Base class for temperature reporting sensors."""
 
     def __init__(self, bmr, config):
         self._bmr = bmr
@@ -82,8 +83,7 @@ class BmrCircuitTemperatureBase(Entity):
 
     @property
     def unit_of_measurement(self):
-        """ Return the unit of measurement.
-        """
+        """Return the unit of measurement."""
         return TEMP_CELSIUS
 
     @property
@@ -103,14 +103,20 @@ class BmrCircuitTemperatureBase(Entity):
 
     @throttle(timedelta(seconds=30))
     def update(self):
-        """ Fetch new state data for the sensor.
-            This is the only method that should fetch new data for Home Assistant.
+        """Fetch new state data for the sensor.
+        This is the only method that should fetch new data for Home Assistant.
         """
         try:
             circuit = self._bmr.getCircuit(self._config.get(CONF_CIRCUIT_ID))
             if circuit["temperature"] is None:
-                _LOGGER.warn("BMR HC64 controller returned temperature as None, trying again later.")
-            elif self._circuit and abs(circuit["temperature"] - self._circuit["temperature"]) >= MAX_TEMPERATURE_DELTA:
+                _LOGGER.warn(
+                    "BMR HC64 controller returned temperature as None, trying again later."
+                )
+            elif (
+                self._circuit
+                and abs(circuit["temperature"] - self._circuit["temperature"])
+                >= MAX_TEMPERATURE_DELTA
+            ):
                 _LOGGER.warn(
                     "BMR HC64 controller returned temperature which is too different from the previously seen value."
                 )
@@ -121,8 +127,7 @@ class BmrCircuitTemperatureBase(Entity):
 
 
 class BmrCircuitTemperature(BmrCircuitTemperatureBase):
-    """ Sensor for reporting the current temperature in BMR HC64 heating circuit.
-    """
+    """Sensor for reporting the current temperature in BMR HC64 heating circuit."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -130,26 +135,22 @@ class BmrCircuitTemperature(BmrCircuitTemperatureBase):
 
     @property
     def name(self):
-        """ Return the name of the sensor.
-        """
+        """Return the name of the sensor."""
         return f"BMR HC64 {self._config.get(CONF_NAME)} temperature"
 
     @property
     def unique_id(self):
-        """ Return unique ID of the entity.
-        """
+        """Return unique ID of the entity."""
         return self._unique_id
 
     @property
     def state(self):
-        """ Return the state of the sensor.
-        """
+        """Return the state of the sensor."""
         return self._circuit.get("temperature")
 
 
 class BmrCircuitTargetTemperature(BmrCircuitTemperatureBase):
-    """ Sensor for reporting the current temperature in BMR HC64 heating circuit.
-    """
+    """Sensor for reporting the current temperature in BMR HC64 heating circuit."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -157,18 +158,15 @@ class BmrCircuitTargetTemperature(BmrCircuitTemperatureBase):
 
     @property
     def name(self):
-        """ Return the name of the sensor.
-        """
+        """Return the name of the sensor."""
         return f"BMR HC64 {self._config.get(CONF_NAME)} target temperature"
 
     @property
     def unique_id(self):
-        """ Return unique ID of the entity.
-        """
+        """Return unique ID of the entity."""
         return self._unique_id
 
     @property
     def state(self):
-        """ Return the state of the sensor.
-        """
+        """Return the state of the sensor."""
         return self._circuit.get("target_temperature")
