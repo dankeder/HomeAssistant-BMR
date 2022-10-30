@@ -49,10 +49,10 @@ from homeassistant.const import (
     ATTR_TEMPERATURE,
     CONF_PASSWORD,
     CONF_USERNAME,
+    CONF_TIMEOUT,
     TEMP_CELSIUS,
 )
 import homeassistant.helpers.config_validation as cv
-from homeassistant.util import Throttle as throttle
 
 PRESET_NORMAL = "Normal"
 PRESET_AWAY = "Away"
@@ -103,11 +103,20 @@ CONF_CIRCUIT = vol.Schema(
     }
 )
 
+# How often will Home Assistant poll the API (== call the update() function)
+SCAN_INTERVAL = timedelta(seconds=60)
+
+# Don't allow parallel runs of the update() function
+PARALLEL_UPDATES = 1
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_BASE_URL): cv.string,
         vol.Required(CONF_USERNAME): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
+        vol.Optional(CONF_TIMEOUT): vol.All(
+            vol.Coerce(int), vol.Range(min=0, max=SCAN_INTERVAL.total_seconds())
+        ),
         vol.Optional(CONF_AWAY_TEMPERATURE): vol.All(
             vol.Coerce(int), vol.Range(min=TEMP_MIN, max=TEMP_MAX)
         ),
@@ -129,8 +138,9 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     base_url = config.get(CONF_BASE_URL)
     user = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
+    timeout = config.get(CONF_TIMEOUT, 10)
 
-    bmr = pybmr.Bmr(base_url, user, password)
+    bmr = pybmr.Bmr(base_url, user, password, timeout)
     entities = [
         BmrRoomClimate(
             bmr=bmr,
@@ -414,7 +424,6 @@ class BmrRoomClimate(ClimateEntity):
             else:
                 self.set_hvac_mode(HVAC_MODE_HEAT)
 
-    @throttle(timedelta(seconds=30))
     def update(self):
         """Fetch new state data for the controller. This is the only method
         that should fetch new data for Home Assistant.
