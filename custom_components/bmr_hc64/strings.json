@@ -1,0 +1,106 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "name": "[%key:common::config_flow::data::name%]",
+          "url": "[%key:common::config_flow::data::url%]",
+          "username": "[%key:common::config_flow::data::username%]",
+          "password": "[%key:common::config_flow::data::password%]",
+          "timeout": "Timeout",
+          "away_temperature": "Away Temperature",
+          "enable_cooling": "Enable cooling"
+        },
+        "data_description": {
+          "name": "Name for your BMR HC64 controller",
+          "url": "Web interface URL",
+          "username": "Username for login",
+          "password": "Password for login",
+          "timeout": "HTTP request timeout",
+          "away_temperature": "Temperature of heating circuits in the away mode",
+          "enable_cooling": "Enable if you have water-based circuits that can be used both for heating and cooling"
+        }
+      },
+      "reconfigure": {
+        "data": {
+          "name": "[%key:common::config_flow::data::name%]",
+          "url": "[%key:common::config_flow::data::url%]",
+          "username": "[%key:common::config_flow::data::username%]",
+          "password": "[%key:common::config_flow::data::password%]",
+          "timeout": "[%key:component::bmr_hc64::config::step::user::data::timeout%]",
+          "away_temperature": "[%key:component::bmr_hc64::config::step::user::data::away_temperature%]",
+          "enable_cooling": "[%key:component::bmr_hc64::config::step::user::data::enable_cooling%]"
+        },
+        "data_description": {
+          "name": "[%key:component::bmr_hc64::config::step::user::data_description::name%]",
+          "url": "[%key:component::bmr_hc64::config::step::user::data_description::url%]",
+          "username": "[%key:component::bmr_hc64::config::step::user::data_description::username%]",
+          "password": "[%key:component::bmr_hc64::config::step::user::data_description::password%]",
+          "timeout": "[%key:component::bmr_hc64::config::step::user::data_description::timeout%]",
+          "away_temperature": "[%key:component::bmr_hc64::config::step::user::data_description::away_temperature%]",
+          "enable_cooling": "[%key:component::bmr_hc64::config::step::user::data_description::enable_cooling%]"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  },
+  "config_subentries": {
+    "circuits": {
+      "step": {
+        "add_circuit": {
+          "description": "Add a new heating circuit",
+          "data": {
+            "circuit_name": "Circuit name",
+            "circuit_id": "Circuit ID",
+            "min_temperature": "Min temperature",
+            "max_temperature": "Max temperature",
+            "auto_mode_daily_schedules": "Circuit schedule",
+            "auto_mode_daily_schedules_starting_day": "Initial circuit schedule",
+            "manual_mode_schedule": "Manual circuit schedule"
+          },
+          "data_description": {
+            "circuit_name": "Name for a Home Assistant device",
+            "circuit_id": "Circuit ID found in the BMR HC64 web interface",
+            "min_temperature": "The lowest permissible temperature for the climate entity",
+            "max_temperature": "The highest permissible temperature for the climate entity",
+            "auto_mode_daily_schedules": "List of BMR HC64 circuit schedules to use when the climate entity is switched into auto mode",
+            "auto_mode_daily_schedules_starting_day": "The initial circuit schedule to use when the climate entity is switched into auto mode",
+            "manual_mode_schedule": "The circuit schedule to use when the climate entity is switched into manual mode"
+          }
+        },
+        "reconfigure_circuit": {
+          "description": "Reconfigure a heating circuit",
+          "data": {
+            "circuit_name": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::circuit_name%]",
+            "circuit_id": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::circuit_id%]",
+            "min_temperature": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::min_temperature%]",
+            "max_temperature": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::max_temperature%]",
+            "auto_mode_daily_schedules": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::auto_mode_daily_schedules%]",
+            "auto_mode_daily_schedules_starting_day": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::auto_mode_daily_schedules_starting_day%]",
+            "manual_mode_schedule": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data::manual_mode_schedule%]"
+          },
+          "data_description": {
+            "circuit_name": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::circuit_name%]",
+            "circuit_id": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::circuit_id%]",
+            "min_temperature": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::min_temperature%]",
+            "max_temperature": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::max_temperature%]",
+            "auto_mode_daily_schedules": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::auto_mode_daily_schedules%]",
+            "auto_mode_daily_schedules_starting_day": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::auto_mode_daily_schedules_starting_day%]",
+            "manual_mode_schedule": "[%key:component::bmr_hc64::config_subentries::circuits::step::add_circuit::data_description::manual_mode_schedule%]"
+          }
+        }
+      },
+      "initiate_flow": {
+        "user": "Add heating circuit",
+        "reconfigure": "Reconfigure heating circuit"
+      }
+    }
+  }
+}

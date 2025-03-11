@@ -1,0 +1,106 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Zařízení je už nakonfigurováno"
+        },
+        "error": {
+            "cannot_connect": "Spojení selhalo",
+            "invalid_auth": "Nesprávné přihlasovací údaje",
+            "unknown": "Neočekávaná chyba"
+        },
+        "step": {
+            "reconfigure": {
+                "data": {
+                    "away_temperature": "Teplota v nepřítomnosti",
+                    "enable_cooling": "Povolit chlazení",
+                    "name": "Jméno",
+                    "password": "Heslo",
+                    "timeout": "Časový limit spojení",
+                    "url": "Adresa (URL)",
+                    "username": "Uživatel"
+                },
+                "data_description": {
+                    "away_temperature": "Teplota topných okruhů v režimu nepřítomnosti",
+                    "enable_cooling": "Povolte pokud máte topný systém na vodní bázi a umožňuje i chlazení",
+                    "name": "Jméno BMR HC64 kontroléru",
+                    "password": "Přihlašovací heslo pro webové rozhraní",
+                    "timeout": "Časový limit pro HTTP požadavky",
+                    "url": "Adresa webového rozhraní",
+                    "username": "Přihlašovací jméno pro webové rozhraní"
+                }
+            },
+            "user": {
+                "data": {
+                    "away_temperature": "Teplota v nepřítomnosti",
+                    "enable_cooling": "Povolit chlazení",
+                    "name": "Jméno",
+                    "password": "Heslo",
+                    "timeout": "Časový limit spojení",
+                    "url": "Adresa (URL)",
+                    "username": "Uživatel"
+                },
+                "data_description": {
+                    "away_temperature": "Teplota topných okruhů v režimu nepřítomnosti",
+                    "enable_cooling": "Povolte pokud máte topný systém na vodní bázi a umožňuje i chlazení",
+                    "name": "Jméno BMR HC64 kontroléru",
+                    "password": "Přihlašovací heslo pro webové rozhraní",
+                    "timeout": "Časový limit pro HTTP požadavky",
+                    "url": "Adresa webového rozhraní",
+                    "username": "Přihlašovací jméno pro webové rozhraní"
+                }
+            }
+        }
+    },
+    "config_subentries": {
+        "circuits": {
+            "initiate_flow": {
+                "reconfigure": "Konfigurovace topného okruhu",
+                "user": "Přidat nový topný okruh"
+            },
+            "step": {
+                "add_circuit": {
+                    "data": {
+                        "auto_mode_daily_schedules": "Topný režim okruhu",
+                        "auto_mode_daily_schedules_starting_day": "Iniciální topný režim",
+                        "circuit_id": "ID topného okruhu",
+                        "circuit_name": "Název topného okruhu",
+                        "manual_mode_schedule": "Topný režim pro ručné nastavení teploty",
+                        "max_temperature": "Maximálni teplota okruhu",
+                        "min_temperature": "Minimální teplota okruhu"
+                    },
+                    "data_description": {
+                        "auto_mode_daily_schedules": "Seznam topných režímů okruhu pro použití v automatickém režimu",
+                        "auto_mode_daily_schedules_starting_day": "Topní režím kterým se má začít v automatickém režimu (pořadové číslo od 1)",
+                        "circuit_id": "ID topného režimu najdete vo webovém rozhraní BMR HC64",
+                        "circuit_name": "Název topného režimu pro Home Assistant",
+                        "manual_mode_schedule": "Topný režim do ktorého se okruh přepne při ručním nastavení teploty",
+                        "max_temperature": "Nejvyšší povolená teplota okruhu",
+                        "min_temperature": "Nejnižší povolená teplota okruhu"
+                    },
+                    "description": "Přidat nový topný okruh"
+                },
+                "reconfigure_circuit": {
+                    "data": {
+                        "auto_mode_daily_schedules": "Topný režim okruhu",
+                        "auto_mode_daily_schedules_starting_day": "Iniciální topný režim",
+                        "circuit_id": "ID topného okruhu",
+                        "circuit_name": "Název topného okruhu",
+                        "manual_mode_schedule": "Topný režim pro ručné nastavení teploty",
+                        "max_temperature": "Maximálni teplota okruhu",
+                        "min_temperature": "Minimální teplota okruhu"
+                    },
+                    "data_description": {
+                        "auto_mode_daily_schedules": "Seznam topných režímů okruhu pro použití v automatickém režimu",
+                        "auto_mode_daily_schedules_starting_day": "Topní režím kterým se má začít v automatickém režimu (pořadové číslo od 1)",
+                        "circuit_id": "ID topného režimu najdete vo webovém rozhraní BMR HC64",
+                        "circuit_name": "Název topného režimu pro Home Assistant",
+                        "manual_mode_schedule": "Topný režim do ktorého se okruh přepne při ručním nastavení teploty",
+                        "max_temperature": "Nejvyšší povolená teplota okruhu",
+                        "min_temperature": "Nejnižší povolená teplota okruhu"
+                    },
+                    "description": "Překonfigurovat topný okruh"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,106 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "reconfigure": {
+                "data": {
+                    "away_temperature": "Away Temperature",
+                    "enable_cooling": "Enable cooling",
+                    "name": "Name",
+                    "password": "Password",
+                    "timeout": "Timeout",
+                    "url": "URL",
+                    "username": "Username"
+                },
+                "data_description": {
+                    "away_temperature": "Temperature of heating circuits in the away mode",
+                    "enable_cooling": "Enable if you have water-based circuits that can be used both for heating and cooling",
+                    "name": "Name for your BMR HC64 controller",
+                    "password": "Password for login",
+                    "timeout": "HTTP request timeout",
+                    "url": "Web interface URL",
+                    "username": "Username for login"
+                }
+            },
+            "user": {
+                "data": {
+                    "away_temperature": "Away Temperature",
+                    "enable_cooling": "Enable cooling",
+                    "name": "Name",
+                    "password": "Password",
+                    "timeout": "Timeout",
+                    "url": "URL",
+                    "username": "Username"
+                },
+                "data_description": {
+                    "away_temperature": "Temperature of heating circuits in the away mode",
+                    "enable_cooling": "Enable if you have water-based circuits that can be used both for heating and cooling",
+                    "name": "Name for your BMR HC64 controller",
+                    "password": "Password for login",
+                    "timeout": "HTTP request timeout",
+                    "url": "Web interface URL",
+                    "username": "Username for login"
+                }
+            }
+        }
+    },
+    "config_subentries": {
+        "circuits": {
+            "initiate_flow": {
+                "reconfigure": "Reconfigure heating circuit",
+                "user": "Add heating circuit"
+            },
+            "step": {
+                "add_circuit": {
+                    "data": {
+                        "auto_mode_daily_schedules": "Circuit schedule",
+                        "auto_mode_daily_schedules_starting_day": "Initial circuit schedule",
+                        "circuit_id": "Circuit ID",
+                        "circuit_name": "Circuit name",
+                        "manual_mode_schedule": "Manual circuit schedule",
+                        "max_temperature": "Max temperature",
+                        "min_temperature": "Min temperature"
+                    },
+                    "data_description": {
+                        "auto_mode_daily_schedules": "List of BMR HC64 circuit schedules to use when the climate entity is switched into auto mode",
+                        "auto_mode_daily_schedules_starting_day": "The initial circuit schedule to use when the climate entity is switched into auto mode",
+                        "circuit_id": "Circuit ID found in the BMR HC64 web interface",
+                        "circuit_name": "Name for a Home Assistant device",
+                        "manual_mode_schedule": "The circuit schedule to use when the climate entity is switched into manual mode",
+                        "max_temperature": "The highest permissible temperature for the climate entity",
+                        "min_temperature": "The lowest permissible temperature for the climate entity"
+                    },
+                    "description": "Add a new heating circuit"
+                },
+                "reconfigure_circuit": {
+                    "data": {
+                        "auto_mode_daily_schedules": "Circuit schedule",
+                        "auto_mode_daily_schedules_starting_day": "Initial circuit schedule",
+                        "circuit_id": "Circuit ID",
+                        "circuit_name": "Circuit name",
+                        "manual_mode_schedule": "Manual circuit schedule",
+                        "max_temperature": "Max temperature",
+                        "min_temperature": "Min temperature"
+                    },
+                    "data_description": {
+                        "auto_mode_daily_schedules": "List of BMR HC64 circuit schedules to use when the climate entity is switched into auto mode",
+                        "auto_mode_daily_schedules_starting_day": "The initial circuit schedule to use when the climate entity is switched into auto mode",
+                        "circuit_id": "Circuit ID found in the BMR HC64 web interface",
+                        "circuit_name": "Name for a Home Assistant device",
+                        "manual_mode_schedule": "The circuit schedule to use when the climate entity is switched into manual mode",
+                        "max_temperature": "The highest permissible temperature for the climate entity",
+                        "min_temperature": "The lowest permissible temperature for the climate entity"
+                    },
+                    "description": "Reconfigure a heating circuit"
+                }
+            }
+        }
+    }
+}
