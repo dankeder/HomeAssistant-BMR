@@ -13,10 +13,26 @@ provides entities from these Home Assistant platforms:
 
 ## Installation
 
-For normal use, use HACS to install the plugin.
+For normal use, use HACS to install the plugin. I assume you already have HACS
+in your Home Assistnt installation.
+
+Steps:
+
+1. Open "Community Store" in the side menu
+
+2. Click the "dots" menu in the top-right corner
+
+3. Select "Custom repositories"
+
+4. Enter `https://github.com/dankeder/HomeAssistant-BMR` into "Repository" field and choose "Integration" in the "Type" field
+
+5. Click "Add" and close the dialog
+
+6. A new integration "BMR HC64" should now be available for download. Find it and click the "Download" button.
+
 
 Alternatively you can install the plugin manually: copy `custom_components/` to
-your Home Assistant config directory.
+your Home Assistant `config` directory.
 
 
 ## Configuration
