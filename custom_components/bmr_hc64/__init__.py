@@ -24,6 +24,7 @@ from homeassistant.exceptions import (
     ConfigEntryError,
     ConfigEntryNotReady,
 )
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 
 from .config_flow import BmrConfigEntry
@@ -38,6 +39,8 @@ _PLATFORMS: list[Platform] = [
 ]
 
 _LOGGER = logging.getLogger(__name__)
+
+CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -71,7 +74,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: BmrConfigEntry) -> bool:
             dt_now = datetime.now()
             dt_ago = dt_now - timedelta(minutes=15)
             dt_ahead = dt_now + timedelta(minutes=15)
-            if (dt_now.date() == dt_ago.date() and dt_now.date() == dt_ahead.date()):
+            if dt_now.date() == dt_ago.date() and dt_now.date() == dt_ahead.date():
                 # We aren't within 15 minutes of midnight
                 raise ConfigEntryAuthFailed(e.args[0]) from e
         raise ConfigEntryError("Unexpected error") from e
