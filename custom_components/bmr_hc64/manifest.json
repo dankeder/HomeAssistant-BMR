@@ -1,11 +1,11 @@
 {
   "domain": "bmr_hc64",
   "name": "BMR HC64",
-  "version": "2.0.0",
   "codeowners": ["@dankeder", "@slesinger"],
   "config_flow": true,
   "documentation": "https://github.com/dankeder/HomeAssistant-BMR?tab=readme-ov-file",
   "integration_type": "device",
   "iot_class": "local_polling",
-  "requirements": ["pybmr==0.7.9"]
+  "requirements": ["pybmr==0.7.9"],
+  "version": "2.0.0"
 }
