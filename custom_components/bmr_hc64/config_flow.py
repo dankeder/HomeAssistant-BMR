@@ -268,7 +268,7 @@ class BmrConfigFlow(ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Handle reconfiguration of the controller."""
-        entry = self._get_reconfigure_entry()
+        entry = self._get_entry()
         errors: dict[str, str] = {}
         if user_input is not None:
             try:
@@ -375,7 +375,7 @@ class CircuitSubentryFlowHandler(ConfigSubentryFlow):
         self, user_input: dict[str, Any] | None = None
     ) -> SubentryFlowResult:
         """Handle reconfiguration of the circuit."""
-        entry = self._get_reconfigure_entry()
+        entry = self._get_entry()
         subentry = self._get_reconfigure_subentry()
         errors: dict[str, str] = {}
         if user_input is not None:
