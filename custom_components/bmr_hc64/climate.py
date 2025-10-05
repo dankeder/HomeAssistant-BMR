@@ -412,9 +412,9 @@ class BmrClimateEntity(CoordinatorEntity[BmrUpdateCoordinator], ClimateEntity): 
         )
         if self.hvac_mode not in (HVACMode.HEAT, HVACMode.HEAT_COOL):
             if self._enable_cooling:
-                self.set_hvac_mode(HVACMode.HEAT_COOL)
+                await self.async_set_hvac_mode(HVACMode.HEAT_COOL)
             else:
-                self.set_hvac_mode(HVACMode.HEAT)
+                await self.async_set_hvac_mode(HVACMode.HEAT)
 
         # Update the state
         await self.coordinator.async_request_refresh()
