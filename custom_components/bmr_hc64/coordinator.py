@@ -1,7 +1,7 @@
 """Update coordinator for BMR HC64 integration."""
 
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 import logging
 from typing import Any
 
