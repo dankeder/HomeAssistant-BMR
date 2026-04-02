@@ -53,6 +53,7 @@
   },
   "config_subentries": {
     "circuits": {
+      "entry_type": "Heating Circuit",
       "step": {
         "add_circuit": {
           "description": "Add a new heating circuit",

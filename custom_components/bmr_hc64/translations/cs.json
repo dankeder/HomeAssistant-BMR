@@ -53,6 +53,7 @@
   },
   "config_subentries": {
     "circuits": {
+      "entry_type": "Heating Circuit",
       "initiate_flow": {
         "reconfigure": "Konfigurovace topného okruhu",
         "user": "Přidat nový topný okruh"

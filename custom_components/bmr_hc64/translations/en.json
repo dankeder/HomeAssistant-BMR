@@ -53,6 +53,7 @@
   },
   "config_subentries": {
     "circuits": {
+      "entry_type": "Heating Circuit",
       "initiate_flow": {
         "reconfigure": "Reconfigure heating circuit",
         "user": "Add heating circuit"
