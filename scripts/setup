@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+# Configure go2rtc version (update this when needed)
+GO2RTC_VERSION="1.9.14"
+
+# Install go2rtc if not already installed
+if ! command -v go2rtc &> /dev/null; then
+    echo "Installing go2rtc v${GO2RTC_VERSION}..."
+
+    # Determine architecture
+    ARCH=$(uname -m)
+    case $ARCH in
+        x86_64) ARCH="amd64" ;;
+        aarch64) ARCH="arm64" ;;
+        *) ARCH="amd64" ;;
+    esac
+
+    # Download go2rtc
+    sudo curl -L "https://github.com/alexxit/go2rtc/releases/download/v${GO2RTC_VERSION}/go2rtc_linux_${ARCH}" -o /usr/local/bin/go2rtc
+
+    sudo chown root:root /usr/local/bin/go2rtc
+    sudo chmod +x /usr/local/bin/go2rtc
+
+    echo "go2rtc installed: $(go2rtc --version)"
+fi
+
+uv sync --frozen
