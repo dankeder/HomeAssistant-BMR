@@ -6,7 +6,7 @@ from collections.abc import Mapping
 import logging
 from typing import Any
 
-from pybmr import Bmr  # type: ignore  # noqa: PGH003
+from bmr_hc64_client import Bmr  # type: ignore  # noqa: PGH003
 import voluptuous as vol
 
 from homeassistant.config_entries import (

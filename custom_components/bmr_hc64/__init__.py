@@ -7,10 +7,8 @@ URL: https://www.bmr.cz/
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
 import logging
-
-from pybmr import Bmr  # type: ignore  # noqa: PGH003
+from datetime import datetime, timedelta
 
 from homeassistant.const import (
     CONF_PASSWORD,
@@ -27,6 +25,7 @@ from homeassistant.exceptions import (
 )
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
+from bmr_hc64_client import Bmr  # type: ignore  # noqa: PGH003
 
 from .config_flow import BmrConfigEntry
 from .const import DOMAIN
@@ -67,17 +66,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: BmrConfigEntry) -> bool:
         ) from e
     except Exception as e:
         if e.args[0] == "Authentication failed, check username/password":
-            # Clocks need to be synchronized because the authentication
-            # uses the current "day". If it's around midnight and the
-            # controller has a different day than Home Assistant because of
-            # a clock desync authentication will fail. Let's ignore auth
-            # failures that occur within 15 minutes around midnight.
+            # Clocks need to be synchronized because the authentication uses the
+            # current "day". If it's around midnight and the controller has a
+            # different day than Home Assistant (due to clock desync),
+            # authentication will fail. We only raise ConfigEntryAuthFailed if
+            # we're NOT around midnight (i.e., the date is stable across the
+            # 15-minute window before and after now).
             dt_now = datetime.now()
             dt_ago = dt_now - timedelta(minutes=15)
             dt_ahead = dt_now + timedelta(minutes=15)
-            if dt_now.date() == dt_ago.date() and dt_now.date() == dt_ahead.date():
-                # We aren't within 15 minutes of midnight
+
+            # If dates match across the window, we're not near midnight
+            # and the auth failure is likely a real credential issue
+            if dt_now.date() == dt_ago.date() == dt_ahead.date():
                 raise ConfigEntryAuthFailed(e.args[0]) from e
+            else:
+                # Raise ConfigEntryNotReady will make HA retry the update
+                raise ConfigEntryNotReady(e.args[0]) from e
+
+        # For all other cases, raise as a generic config error
         raise ConfigEntryError("Unexpected error") from e
 
     coordinator = BmrUpdateCoordinator(hass, entry, bmr)
